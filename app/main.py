@@ -34,11 +34,15 @@ app.add_middleware(
 app.include_router(health_router)
 
 app.include_router(
-
     register_router,
-
-    prefix="/api/register",
-
+    prefix="/api/v1/register",
     tags=["Register"]
-
 )
+@app.get("/")
+def root():
+    return {
+        "application": "InvoiceAI Backend",
+        "version": "0.1.0",
+        "status": "running",
+        "documentation": "/docs"
+    }
