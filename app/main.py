@@ -6,6 +6,7 @@ from app.api.register import router as register_router
 from app.api.upload import router as upload_router
 from app.config.settings import settings
 
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,

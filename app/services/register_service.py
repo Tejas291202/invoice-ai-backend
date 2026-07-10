@@ -1,27 +1,23 @@
-from app.schemas.register import RegisterSummary
+from app.repositories.register_repository import RegisterRepository
+from app.repositories.invoice_repository import InvoiceRepository
 
 
 class RegisterService:
 
-    @staticmethod
-    def current_register():
+    def __init__(self):
+        self.repository = RegisterRepository()
+        self.invoice_repository = InvoiceRepository()
 
-        return RegisterSummary(
+    async def create_register(
+        self,
+        name: str,
+    ):
+        return self.repository.create(name)
 
-            id="reg_001",
-
-            name="Purchase Register - July 2026",
-
-            invoiceCount=8,
-
-            ready=6,
-
-            attention=2,
-
-            failed=0,
-
-            total=248000,
-
-            status="ACTIVE"
-
+    async def get_invoices(
+        self,
+        register_id: str,
+    ):
+        return self.invoice_repository.get_by_register(
+            register_id
         )

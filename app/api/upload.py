@@ -2,15 +2,18 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from app.services.upload_service import UploadService
 from app.services.ocr_service import OCRService
+from app.repositories.invoice_repository import InvoiceRepository
 
 router = APIRouter()
 
 upload_service = UploadService()
 ocr_service = OCRService()
+invoice_repository = InvoiceRepository()
 
 
 @router.post("/")
 async def upload_invoices(
+    register_id: str,
     files: list[UploadFile] = File(...)
 ):
     """
@@ -29,6 +32,10 @@ async def upload_invoices(
 
             invoice_data = await ocr_service.extract_invoice(
                 upload_result["temp_path"]
+            )
+            invoice_repository.create(
+                 register_id,
+                 invoice_data,
             )
 
             uploaded_files.append(
