@@ -1,11 +1,19 @@
+# Python
 __pycache__/
 *.pyc
 
-.env
-
+# Virtual Environment
 .venv/
 
-uploads/*
-exports/*
+# Environment Variables
+.env
 
+# Temporary Files
+temp/
+uploads/
+
+# IDE
 .vscode/
+
+# macOS
+.DS_Store

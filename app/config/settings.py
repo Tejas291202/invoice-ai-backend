@@ -1,16 +1,17 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
 
-    APP_NAME: str = "InvoiceAI API"
-
+    APP_NAME: str = "InvoiceAI Backend"
     APP_VERSION: str = "0.1.0"
 
-    GEMINI_API_KEY: str = ""
+    GEMINI_API_KEY: str
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=True
+    )
 
 
 settings = Settings()
