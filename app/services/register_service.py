@@ -21,3 +21,12 @@ class RegisterService:
         return self.invoice_repository.get_by_register(
             register_id
         )
+    async def update_invoice(
+        self,
+        invoice_id: str,
+        invoice: dict,
+    ):
+        return self.invoice_repository.update(
+            invoice_id,
+            invoice,
+        )

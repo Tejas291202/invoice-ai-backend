@@ -48,3 +48,19 @@ class InvoiceRepository:
         )
 
         return response.data
+
+    def update(
+        self,
+        invoice_id: str,
+        invoice: dict,
+    ):
+
+        response = (
+            supabase
+            .table("invoices")
+            .update(invoice)
+            .eq("id", invoice_id)
+            .execute()
+        )
+
+        return response.data
