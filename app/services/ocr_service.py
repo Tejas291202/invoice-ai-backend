@@ -1,7 +1,9 @@
 import os
 
 from app.services.gemini_service import GeminiService
+from app.services.usage_service import UsageService
 
+usage = UsageService()
 
 class OCRService:
 
