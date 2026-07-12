@@ -30,3 +30,6 @@ class RegisterService:
             invoice_id,
             invoice,
         )
+    async def get_registers(self):
+
+        return self.repository.get_all()

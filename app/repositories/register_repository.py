@@ -15,3 +15,17 @@ class RegisterRepository:
         )
 
         return response.data[0]
+    def get_all(self):
+
+        response = (
+            supabase
+            .table("registers")
+            .select("*")
+            .order(
+                "created_at",
+                desc=True,
+            )
+            .execute()
+        )
+
+        return response.data
