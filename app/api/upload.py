@@ -3,6 +3,9 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 from app.services.upload_service import UploadService
 from app.services.ocr_service import OCRService
 from app.repositories.invoice_repository import InvoiceRepository
+import asyncio
+
+from app.config import REQUEST_DELAY_SECONDS
 
 router = APIRouter()
 
@@ -24,7 +27,7 @@ async def upload_invoices(
 
     uploaded_files = []
 
-    for file in files:
+    for index, file in enumerate(files):
 
         try:
 
@@ -33,9 +36,10 @@ async def upload_invoices(
             invoice_data = await ocr_service.extract_invoice(
                 upload_result["temp_path"]
             )
+
             invoice_repository.create(
-                 register_id,
-                 invoice_data,
+                register_id,
+                invoice_data,
             )
 
             uploaded_files.append(
@@ -49,7 +53,14 @@ async def upload_invoices(
                 }
             )
 
-        except ValueError as e:
+            # Wait before processing the next invoice
+            if index < len(files) - 1:
+
+                await asyncio.sleep(
+                    REQUEST_DELAY_SECONDS
+                )
+
+        except Exception as e:
 
             raise HTTPException(
                 status_code=400,
